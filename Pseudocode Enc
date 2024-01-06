@@ -1,0 +1,44 @@
+Size = 4
+
+While Key Not Invertible And Too Big
+    Generate key 4x4
+End While
+
+Save key as image
+
+Split plain_image channel into R G B
+
+While image_size % key_size != 0
+    Add padding to plain_image
+End While
+
+For Each channel
+    Reshape plain_image channel matrix into 4x4
+End For
+
+For Each Channel
+    For i in range (plain_image.height)
+        For Each reshaped_plain_image_4x4 in range (plain_image.width)
+            result = Key * reshaped_plain_image_4x4 * mod 256
+        End For
+
+        result.concatenate, axis = 1 (column)
+        result.append
+
+        If Channel == Red
+            combined_result0 = result.append
+        If Channel == Green
+            combined_result1 = result.append
+        If Channel == Blue
+            combined_result2 = result.append
+    End For
+End For
+
+channel_red = concatenate.combined_result0, axis = 0 (row)
+channel_green = concatenate.combined_result1, axis = 0 (row)
+channel_blue = concatenate.combined_result2, axis = 0 (row)
+
+Merge (channel_red, channel_green, channel_blue)
+
+Save Merge as image
+
